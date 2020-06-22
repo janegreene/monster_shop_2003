@@ -2,14 +2,23 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "merchants#index"
 
-  namespace :merchant do
-    # get '/', to: 'dashboard#index'
-    resources :items
-    # get '/orders/:id', to: 'orders#show'
-    patch '/item_orders/:id', to: 'item_orders#update'
-  end
+  # namespace :merchant do
+  #   # get '/', to: 'dashboard#index'
+  #   # resources :items
+  #   # get '/orders/:id', to: 'orders#show'
+  #   # patch '/item_orders/:id', to: 'item_orders#update'
+  # end
   get '/merchant', to: 'merchant/dashboard#index', as: :merchant_dashboard
   get '/merchant/orders/:id', to: 'merchant/orders#show'
+  patch '/merchant/item_orders/:id', to: 'merchant/item_orders#update'
+  get '/merchant/items', to: 'merchant/items#index'
+  get '/merchant/items/new', to: 'merchant/items#new'
+  post '/merchant/items', to: 'merchant/items#create'
+  get '/merchant/items/:id/edit', to: 'merchant/items#edit', as: :edit_merchant_item
+  patch '/merchant/items/:id', to: 'merchant/items#update', as: :merchant_item
+  put '/merchant/items/:id', to: 'merchant/items#update'
+  delete '/merchant/items/:id', to: 'merchant/items#destroy'
+
 
   namespace :admin do
     get '/', to: 'dashboard#index'
