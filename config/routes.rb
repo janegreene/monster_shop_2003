@@ -1,13 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "merchants#index"
 
-  # namespace :merchant do
-  #   # get '/', to: 'dashboard#index'
-  #   # resources :items
-  #   # get '/orders/:id', to: 'orders#show'
-  #   # patch '/item_orders/:id', to: 'item_orders#update'
-  # end
   get '/merchant', to: 'merchant/dashboard#index', as: :merchant_dashboard
   get '/merchant/orders/:id', to: 'merchant/orders#show'
   patch '/merchant/item_orders/:id', to: 'merchant/item_orders#update'
@@ -19,14 +12,6 @@ Rails.application.routes.draw do
   put '/merchant/items/:id', to: 'merchant/items#update'
   delete '/merchant/items/:id', to: 'merchant/items#destroy'
 
-
-  # namespace :admin do
-    # get '/', to: 'dashboard#index'
-    # resources :users, only: [:index, :show]
-    # resources :merchants, only: [:index, :show, :update] do
-      # resources :items
-    # end
-  # end
   get '/admin', to: 'admin/dashboard#index', as: :admin_dashboard
   get '/admin/users/:id', to: 'admin/users#show'
   get '/admin/users', to: 'admin/users#index'
@@ -50,8 +35,6 @@ Rails.application.routes.draw do
 
   patch "/users/password_change", to: "users#password_change"
   resources :users, only:[:create, :update]
-  # post "/users", to: 'users#create'
-  #patch "/users", to: 'users#update'
 
   get "/profile", to: 'users#show'
   get "/profile/orders", to: "orders#index"
@@ -62,36 +45,18 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
 
   resources :merchants
-  # get "/merchants", to: "merchants#index"
-  # get "/merchants/new", to: "merchants#new"
-  # get "/merchants/:id", to: "merchants#show"
-  # post "/merchants", to: "merchants#create"
-  # get "/merchants/:id/edit", to: "merchants#edit"
-  # patch "/merchants/:id", to: "merchants#update"
-  # delete "/merchants/:id", to: "merchants#destroy"
 
   resources :items, only:[:index, :show, :edit, :update, :destroy]
-  # get "/items", to: "items#index"
-  # get "/items/:id", to: "items#show"
-  # get "/items/:id/edit", to: "items#edit"
-  # patch "/items/:id", to: "items#update"
-  # delete "/items/:id", to: "items#destroy"
+
   resources :merchants do
     resources :items, only:[:index, :new, :create]
   end
-  # get "/merchants/:merchant_id/items", to: "items#index"
-  # get "/merchants/:merchant_id/items/new", to: "items#new"
-  # post "/merchants/:merchant_id/items", to: "items#create"
+
   resources :items do
     resources :reviews, only:[:new, :create]
   end
-  # get "/items/:item_id/reviews/new", to: "reviews#new"
-  # post "/items/:item_id/reviews", to: "reviews#create"
 
   resources :reviews, only:[:edit, :update, :destroy]
-  # get "/reviews/:id/edit", to: "reviews#edit"
-  # patch "/reviews/:id", to: "reviews#update"
-  # delete "/reviews/:id", to: "reviews#destroy"
 
   post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
@@ -100,9 +65,6 @@ Rails.application.routes.draw do
 
 
   resources :orders, only:[:new, :create, :show]
-  # get "/orders/new", to: "orders#new"
-  # post "/orders", to: "orders#create"
-  # get "/orders/:id", to: "orders#show"
   patch "/orders/:id/cancel", to: 'orders#cancel'
   patch "/orders/:id/ship", to: 'orders#ship'
 end

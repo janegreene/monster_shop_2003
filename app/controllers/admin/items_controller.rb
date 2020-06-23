@@ -32,12 +32,10 @@ class Admin::ItemsController < Admin::BaseController
       @item.update_attributes(active?: false)
       flash[:success] = "#{@item.name} is no longer for sale"
       redirect_to "/admin/merchants/#{params[:merchant_id]}/items"
-      # redirect_to admin_merchant_items_path(params[:merchant_id])
     elsif params[:type] == "activate"
       @item.update_attributes(active?: true)
       flash[:success] = "#{@item.name} is now available for sale"
       redirect_to "/admin/merchants/#{params[:merchant_id]}/items"
-      # redirect_to admin_merchant_items_path(params[:merchant_id])
     else
       @item.update(item_params)
       if @item.save
