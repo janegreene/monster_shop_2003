@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     # get '/', to: 'dashboard#index'
     # resources :users, only: [:index, :show]
     resources :merchants, only: [:index, :show, :update] do
-      resources :items
+      # resources :items
     end
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin_dashboard
@@ -33,13 +33,15 @@ Rails.application.routes.draw do
 
   ###in progress cannot get tests to pass when replacing triple nested routes
 
-  # get '/admin/merchants/:merchant_id/items', to: 'admin/items#index'
-  # post '/admin/merchants/:merchant_id/items', to: 'admin/items#create'
-  # get '/admin/merchants/:merchant_id/items/new', to: 'admin/items#new'
-  # get '/admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#edit'
-  # get '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#show'
-  # get '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#update'
-  # get '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#destroy'
+  get '/admin/merchants/:merchant_id/items', to: 'admin/items#index'
+  post '/admin/merchants/:merchant_id/items', to: 'admin/items#create', as: :admin_merchant_items
+  get '/admin/merchants/:merchant_id/items/new', to: 'admin/items#new'
+  patch '/admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#update'
+  get '/admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#edit', as: :admin_merchant_item
+  # get '/admin/merchants/:merchant_id/items/:id', to: 'items#show'
+  patch '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#update'
+  # put '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#update'
+  delete '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#destroy'
 
   # get '/admin/merchants/:id/items', to: 'admin/items#index'
   # get '/admin/merchants/:id', to: 'admin/merchants#show'
@@ -51,10 +53,10 @@ Rails.application.routes.draw do
   get "/register/edit", to: 'users#edit'
   get "/register/password", to: 'users#password'
 
-  resources :users, only:[:create]
-  # post "/users", to: 'users#create'
-  patch "/users", to: 'users#update' #this as a resource tried to go to the users/id patch method, need to understand more
   patch "/users/password_change", to: "users#password_change"
+  resources :users, only:[:create, :update]
+  # post "/users", to: 'users#create'
+  #patch "/users", to: 'users#update'
 
   get "/profile", to: 'users#show'
   get "/profile/orders", to: "orders#index"
@@ -79,13 +81,17 @@ Rails.application.routes.draw do
   # get "/items/:id/edit", to: "items#edit"
   # patch "/items/:id", to: "items#update"
   # delete "/items/:id", to: "items#destroy"
-
-  get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
-  post "/merchants/:merchant_id/items", to: "items#create"
-
-  get "/items/:item_id/reviews/new", to: "reviews#new"
-  post "/items/:item_id/reviews", to: "reviews#create"
+  resources :merchants do
+    resources :items, only:[:index, :new, :create]
+  end
+  # get "/merchants/:merchant_id/items", to: "items#index"
+  # get "/merchants/:merchant_id/items/new", to: "items#new"
+  # post "/merchants/:merchant_id/items", to: "items#create"
+  resources :items do
+    resources :reviews, only:[:new, :create]
+  end
+  # get "/items/:item_id/reviews/new", to: "reviews#new"
+  # post "/items/:item_id/reviews", to: "reviews#create"
 
   resources :reviews, only:[:edit, :update, :destroy]
   # get "/reviews/:id/edit", to: "reviews#edit"
