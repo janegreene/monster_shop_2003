@@ -30,6 +30,15 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin/dashboard#index', as: :admin_dashboard
   get '/admin/users/:id', to: 'admin/users#show'
   get '/admin/users', to: 'admin/users#index'
+
+  # get '/admin/merchants/:merchant_id/items', to: 'admin/items#index'
+  # post '/admin/merchants/:merchant_id/items', to: 'admin/items#create'
+  # get '/admin/merchants/:merchant_id/items/new', to: 'admin/items#new'
+  # get '/admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#edit'
+  # get '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#show'
+  # get '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#update'
+  # get '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#destroy'
+
   # get '/admin/merchants/:id/items', to: 'admin/items#index'
   # get '/admin/merchants/:id', to: 'admin/merchants#show'
   # get '/admin/merchants', to: 'admin/merchants#index'
@@ -52,13 +61,14 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
+  # get "/merchants", to: "merchants#index"
+  # get "/merchants/new", to: "merchants#new"
+  # get "/merchants/:id", to: "merchants#show"
+  # post "/merchants", to: "merchants#create"
+  # get "/merchants/:id/edit", to: "merchants#edit"
+  # patch "/merchants/:id", to: "merchants#update"
+  # delete "/merchants/:id", to: "merchants#destroy"
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
