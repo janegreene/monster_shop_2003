@@ -51,8 +51,9 @@ Rails.application.routes.draw do
   get "/register/edit", to: 'users#edit'
   get "/register/password", to: 'users#password'
 
-  post "/users", to: 'users#create'
-  patch "/users", to: 'users#update'
+  resources :users, only:[:create]
+  # post "/users", to: 'users#create'
+  patch "/users", to: 'users#update' #this as a resource tried to go to the users/id patch method, need to understand more
   patch "/users/password_change", to: "users#password_change"
 
   get "/profile", to: 'users#show'
@@ -86,9 +87,10 @@ Rails.application.routes.draw do
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  resources :reviews, only:[:edit, :update, :destroy]
+  # get "/reviews/:id/edit", to: "reviews#edit"
+  # patch "/reviews/:id", to: "reviews#update"
+  # delete "/reviews/:id", to: "reviews#destroy"
 
   post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
