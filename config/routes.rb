@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   get '/admin/users/:id', to: 'admin/users#show'
   get '/admin/users', to: 'admin/users#index'
 
+  ###in progress cannot get tests to pass when replacing triple nested routes
+
   # get '/admin/merchants/:merchant_id/items', to: 'admin/items#index'
   # post '/admin/merchants/:merchant_id/items', to: 'admin/items#create'
   # get '/admin/merchants/:merchant_id/items/new', to: 'admin/items#new'
@@ -70,14 +72,16 @@ Rails.application.routes.draw do
   # patch "/merchants/:id", to: "merchants#update"
   # delete "/merchants/:id", to: "merchants#destroy"
 
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
+  resources :items, only:[:index, :show, :edit, :update, :destroy]
+  # get "/items", to: "items#index"
+  # get "/items/:id", to: "items#show"
+  # get "/items/:id/edit", to: "items#edit"
+  # patch "/items/:id", to: "items#update"
+  # delete "/items/:id", to: "items#destroy"
+
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
-  delete "/items/:id", to: "items#destroy"
 
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
