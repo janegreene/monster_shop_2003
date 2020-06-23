@@ -254,7 +254,8 @@ RSpec.describe "As a Admin" do
     fill_in "Name", with: "new name"
     fill_in "Description", with: "new description"
     click_button "Update Item"
-    expect(current_path).to eq(admin_merchant_items_path(@meg.id))
+
+    expect(current_path).to eq("/admin/merchants/#{@meg.id}/items")
     expect(page).to have_content("Item Updated")
     within "#item-#{@tire.id}" do
       expect(page).to have_content("new name")
@@ -299,7 +300,8 @@ RSpec.describe "As a Admin" do
     within "#item-#{test_item.id}" do
       click_on "delete"
     end
-    expect(current_path).to eq(admin_merchant_items_path(@meg.id))
+
+    expect(current_path).to eq("/admin/merchants/#{@meg.id}/items")
     expect(page).to_not have_css("#item-#{test_item.id}")
   end
 
