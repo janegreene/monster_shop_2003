@@ -97,9 +97,11 @@ Rails.application.routes.draw do
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
 
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
+
+  resources :orders, only:[:new, :create, :show]
+  # get "/orders/new", to: "orders#new"
+  # post "/orders", to: "orders#create"
+  # get "/orders/:id", to: "orders#show"
   patch "/orders/:id/cancel", to: 'orders#cancel'
   patch "/orders/:id/ship", to: 'orders#ship'
 end
