@@ -20,34 +20,29 @@ Rails.application.routes.draw do
   delete '/merchant/items/:id', to: 'merchant/items#destroy'
 
 
-  namespace :admin do
+  # namespace :admin do
     # get '/', to: 'dashboard#index'
     # resources :users, only: [:index, :show]
-    resources :merchants, only: [:index, :show, :update] do
+    # resources :merchants, only: [:index, :show, :update] do
       # resources :items
-    end
-  end
+    # end
+  # end
   get '/admin', to: 'admin/dashboard#index', as: :admin_dashboard
   get '/admin/users/:id', to: 'admin/users#show'
   get '/admin/users', to: 'admin/users#index'
-
-  ###in progress cannot get tests to pass when replacing triple nested routes
 
   get '/admin/merchants/:merchant_id/items', to: 'admin/items#index'
   post '/admin/merchants/:merchant_id/items', to: 'admin/items#create', as: :admin_merchant_items
   get '/admin/merchants/:merchant_id/items/new', to: 'admin/items#new'
   patch '/admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#update'
   get '/admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#edit', as: :admin_merchant_item
-  # get '/admin/merchants/:merchant_id/items/:id', to: 'items#show'
   patch '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#update'
-  # put '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#update'
   delete '/admin/merchants/:merchant_id/items/:id', to: 'admin/items#destroy'
 
-  # get '/admin/merchants/:id/items', to: 'admin/items#index'
-  # get '/admin/merchants/:id', to: 'admin/merchants#show'
-  # get '/admin/merchants', to: 'admin/merchants#index'
-  # get '/admin/merchants/:id', to: 'admin/merchants#update'
-  # patch '/admin/merchants/:id', to: 'admin/merchants#update'
+  get '/admin/merchants/:id', to: 'admin/merchants#show'
+  get '/admin/merchants', to: 'admin/merchants#index'
+  get '/admin/merchants/:id', to: 'admin/merchants#update'
+  patch '/admin/merchants/:id', to: 'admin/merchants#update'
 
   get "/register", to: 'users#new'
   get "/register/edit", to: 'users#edit'
